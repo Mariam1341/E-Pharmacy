@@ -1,0 +1,128 @@
+<div class="register-container container-fluid p-0">
+  <div class="row g-0 min-vh-100">
+    <div
+      class="col-7 d-none d-md-flex left-side flex-column justify-content-center align-items-center text-white p-5 position-relative overflow-hidden"
+    >
+      <div
+        id="particles-js"
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></div>
+
+      <div class="z-index-10 w-75 position-relative" style="z-index: 10">
+        <h1 class="display-6 text-center fw-bold mb-4">
+          Your medication, delivered. Say goodbye to all your healthcare worries
+          with us
+        </h1>
+        <!-- <p >Say goodbye to all your healthcare worries with us</p> -->
+      </div>
+    </div>
+
+    <div
+      class="col-5 d-flex align-items-center justify-content-center bg-white p-5"
+    >
+      <div class="w-100" style="max-width: 400px">
+        <h2 class="text-teal text-center fw-bold mb-2">Welcome Back!</h2>
+        <p class="text-muted text-center small mb-4">
+          Please sign in to your account
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 mb-4">
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <div class="text-center position-relative mb-4">
+          <hr />
+          <span
+            class="bg-white px-3 position-absolute top-50 start-50 translate-middle text-muted small"
+            >or continue with</span
+          >
+        </div>
+
+        <form
+          name="loginForm"
+          ng-submit="loginForm.$valid && login()"
+          novalidate
+        >
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-teal">Email</label>
+            <input
+              type="email"
+              name = "email"
+              class="form-control custom-input"
+              ng-model="formData.email"
+              placeholder="mariam@gmail.com"
+              required
+            />
+            <span
+              class="error-text"
+              ng-show="loginForm.email.$touched && loginForm.email.$error.required"
+            >
+              Email is required.
+            </span>
+            <span
+              class="error-text"
+              ng-show="loginForm.email.$touched && loginForm.email.$error.email"
+            >
+              Please enter a valid Email
+            </span>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-teal">Password</label>
+            <input
+              type="password"
+              name = "password"
+              class="form-control custom-input"
+              ng-model="formData.password"
+              placeholder="•••••"
+              required
+            />
+            <span
+              class="error-text"
+              ng-show="loginForm.password.$touched && loginForm.password.$error.required"
+            >
+              Password is required.
+            </span>
+          </div>
+
+          <div
+            class="d-flex justify-content-between align-items-center mb-4 small"
+          >
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="remember" />
+              <label class="form-check-label text-muted" for="remember"
+                >Remember me</label
+              >
+            </div>
+            <a href="#" class="text-teal text-decoration-none fw-bold"
+              >Forgot your password?</a
+            >
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-teal w-100 rounded-pill py-2 fw-bold shadow-sm"
+          >
+            Sign in
+          </button>
+
+          <p class="text-center text-muted small mt-4">
+            Don't have an account?
+            <a href="#!/register" class="text-teal text-decoration-none fw-bold"
+              >Sign up</a
+            >
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

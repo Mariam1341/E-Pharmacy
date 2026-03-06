@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ENAYA</title>
+
+    <script src="assets/js/angular/angular.min.js"></script>
+    <script src="assets/js/angular/angular-route.js"></script>
+
+    <script src="app.js"></script>
+
+    <!-- controllers -->
+    <script src="controllers/authController.js"></script>
+
+
+    <!-- Services -->
+    <script src="services/userService.js"></script>
+
+
+
+    <!-- assests -->
+    <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/angular/angular-csp.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- CSS - JS libraries -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+  </head>
+  <body>
+    <div>
+      <div ng-view></div>
+    </div>
+  </body>
+</html>

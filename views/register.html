@@ -1,0 +1,79 @@
+<div class="register-container container-fluid p-0">
+    <div class="row g-0 min-vh-100">
+        <div class="col-7 d-none d-md-flex left-side flex-column justify-content-center align-items-center text-white p-5 position-relative overflow-hidden">
+    
+    <div id="particles-js" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1;"></div>
+
+    <div class="z-index-10 w-75 position-relative" style="z-index: 10;">
+        <h1 class="display-6 text-center fw-bold mb-4">Your medication, delivered. Say goodbye to all your healthcare worries with us</h1>
+        <!-- <p >Say goodbye to all your healthcare worries with us</p> -->
+    </div>
+</div>
+
+        <div class="col-5 d-flex align-items-center justify-content-center bg-white p-5">
+            <form class="w-100" name="registerForm" ng-submit="registerForm.$valid && register()">
+                <h2 class="text-teal text-center mb-5 display-5 fw-bold">Register</h2>
+                
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label small fw-bold">FIRST NAME</label>
+                        <input type="text" class="form-control border-0 border-bottom rounded-0" ng-model="formData.firstName" placeholder="Mariam" >
+                    </div>
+                    <div class="col">
+                        <label class="form-label small fw-bold">LAST NAME</label>
+                        <input type="text" class="form-control border-0 border-bottom rounded-0" ng-model="formData.lastName" placeholder="Mohammed" >
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">USERNAME</label>
+                    <input type="text" name="userName" class="form-control border-0 border-bottom rounded-0" ng-model="formData.userName" placeholder="Maraim123" required>
+                    <span class="error-text" ng-show="registerForm.userName.$touched && registerForm.userName.$error.required">
+                        User Name is required.
+                    </span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label small fw-bold">EMAIL ADDRESS</label>
+                        <input type="email" name= "email"class="form-control border-0 border-bottom rounded-0" ng-model="formData.email" placeholder="mariam@gmail.com" required>
+                        <span class="error-text" ng-show="registerForm.email.$touched && registerForm.email.$error.required">
+                            Email is required.
+                        </span>
+                        <span class="error-text" ng-show="registerForm.email.$touched && registerForm.email.$error.email">
+                            Please enter a valid Email
+                        </span>
+                    </div>
+                    <div class="col">
+                        <label class="form-label small fw-bold">PHONE NUMBER</label>
+                        <input type="text" class="form-control border-0 border-bottom rounded-0" ng-model="formData.phone" placeholder="+201012540958" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col">
+                        <label class="form-label small fw-bold">PASSWORD</label>
+                        <input type="password" name = "password"  class="form-control border-0 border-bottom rounded-0" ng-model="formData.password" placeholder="•••••" required>
+                        <span class="error-text" ng-show="registerForm.password.$touched && registerForm.password.$error.required">
+                            Password is required.
+                        </span>
+                    </div>
+                    <div class="col">
+                        <label class="form-label small fw-bold">CONFIRM PASSWORD</label>
+                        <input type="password" name = "cmPassword" class="form-control border-0 border-bottom rounded-0" ng-model="formData.cmPassword" placeholder="•••••" required>
+                         <span class="error-text" ng-show="formData.password !== formData.cmPassword && registerForm.cmPassword.$dirty">
+                            Passwords do not match!
+                        </span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-teal rounded-pill px-5 py-2 mb-3">Register</button>
+                    <br>
+                    <a href="#!/login" class="text-teal text-decoration-none fw-bold">Already have account?</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
