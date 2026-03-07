@@ -10,7 +10,12 @@ app.config(function($routeProvider){
   }).when('/login',{
     templateUrl:'views/login.html',
     controller:'authController'
+  }).when('/admin/customers',{
+    templateUrl:'views/admin/customers.html',
+    controller:'customerController'
+  }).when('/home',{
+    templateUrl:'views/home.html',
   }).otherwise({
-    redirectTo:'index.html'
+    redirectTo:'/home'
   })
 });
