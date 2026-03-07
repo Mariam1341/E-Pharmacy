@@ -19,25 +19,19 @@ app.controller('customerController', function($scope, userService, notificationS
    // this.confirm = function(title, text, iconType, confirmText) {
  
     $scope.deleteCustomer = function(user){
+      notificationService.confirm('Delete Confirmation',
+        'Are you sure you want to delete ' + user.userName + '?', 'warning', 'Yes, Delete')
+        .then(function(result){
 
-
-    notificationService.confirm('Delete Confirmation',
-       'Are you sure you want to delete ' + user.userName + '?', 'warning', 'Yes, Delete')
-       .then(function(result){
-
-        if(result.isConfirmed){
-          userService.deleteUser(user.id)
-          .then(function(response){
-             showAllCustomers();
-             notificationService.showMsg('Customer has been deleted successfuly', 'success');          
-          }).catch(function(error){
-            notificationService.showMsg('Error: Could not delete customer', 'error');
-          });
-        }
-       })
-
-
-
-      
+          if(result.isConfirmed){
+            userService.deleteUser(user.id)
+            .then(function(response){
+              showAllCustomers();
+              notificationService.showMsg('Customer has been deleted successfuly', 'success');          
+            }).catch(function(error){
+              notificationService.showMsg('Error: Could not delete customer', 'error');
+            });
+          }
+        })    
     }
 });

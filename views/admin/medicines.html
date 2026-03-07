@@ -1,0 +1,175 @@
+<div class="d-flex">
+  <admin-sidebar></admin-sidebar>
+
+  <main class="flex-grow-1 p-5 bg-light" style="min-height: 100vh">
+    <header class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <button class="btn btn-teal text-white px-4 py-2 rounded-3 shadow-sm" 
+        style="background-color: #14b8a6;"
+        ng-click="openAddModal()">
+    Add a new Product
+</button>
+      </div>
+      <div class="d-flex gap-2">
+        <div class="position-relative">
+          <input
+            type="text"
+            class="form-control border-0 shadow-sm ps-4"
+            placeholder="    Medicine Name"
+            ng-model="searchName"
+            style="width: 250px"
+          />
+        </div>
+        <button
+          class="btn btn-teal px-4 shadow-sm text-white"
+          style="background-color: #14b8a6"
+        >
+          Filter
+        </button>
+      </div>
+    </header>
+
+    <!-- <div class="mb-4">
+            <button class="btn btn-teal shadow-sm text-white px-4 py-2 rounded-3" style="background-color: #14b8a6;">
+                Add a new Product
+            </button>
+        </div> -->
+
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-0">
+        <div class="d-flex justify-content-center my-5" ng-show="loading">
+          <div
+            class="spinner-border custom-spinner"
+            role="status"
+            style="color: #14b8a6; width: 3rem; height: 3rem"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <table class="table table-hover mb-0" ng-hide="loading">
+          <thead class="bg-light-teal text-teal fw-bold">
+            <tr>
+              <th class="p-3 ps-4">PRODUCT INFO</th>
+              <th class="p-3 text-uppercase">Category</th>
+              <th class="p-3 text-uppercase text-center">Stock</th>
+              <th class="p-3 text-uppercase">Suppliers</th>
+              <th class="p-3 text-uppercase text-center">Price</th>
+              <th class="p-3 text-center text-uppercase">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              ng-repeat="med in medicines | filter:{isDeleted: false} | filter:searchName "
+            >
+              <td class="ps-4 py-3">
+                <div class="d-flex align-items-center">
+                  <img
+                    ng-src="{{med.img_url}}"
+                    class="rounded shadow-sm me-3"
+                    style="
+                      width: 40px;
+                      height: 40px;
+                      object-fit: contain;
+                      background: #f8f9fa;
+                    "
+                  />
+                  <span class="fw-bold text-uppercase" style="font-size: 0.9rem"
+                    >{{med.name}}</span
+                  >
+                </div>
+              </td>
+              <td class="text-muted small py-3">{{med.category}}</td>
+              <td class="text-center py-3">
+                <span class="badge rounded-pill bg-light text-dark border px-3"
+                  >{{med.stock}}</span
+                >
+              </td>
+              <td class="text-muted py-3">{{med.suplier}}</td>
+              <td class="text-center py-3 fw-bold">{{med.price}}£</td>
+              <td class="text-center py-3">
+                <div class="d-flex justify-content-center gap-2">
+                  <button
+                    class="btn btn-link text-warning p-0 me-2"
+                    style="text-decoration: none"
+                    ng-click="editMedicine(med)"
+                  >
+                    <i class="fas fa-edit me-1"></i> Edit
+                  </button>
+                  <button
+                    class="btn btn-outline-danger btn-sm rounded-pill px-3 border-0 fw-bold"
+                    style="text-decoration: none"
+                    ng-click="deleteMedicine(med)"
+                  >
+                    <i class="fas fa-trash-alt me-1"></i> Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="modal fade show" tabindex="-1" 
+     ng-style="isModalOpen ? {'display': 'block', 'background': 'rgba(0,0,0,0.5)'} : {'display': 'none'}">
+    
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-header border-0 pb-0 ">
+                <h5 class="fw-bold" ng-style="isEditMode ? {'color': '#f39c12'} : {'color': '#14b8a6'}">
+    {{isEditMode ? 'Edit Medicine' : 'Add New Medicine'}}
+                <button type="button" class="btn-close" ng-click="closeModal()"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form ng-submit="saveMedicine()">
+    <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">Medicine Name</label>
+        <input type="text" class="form-control rounded-3 border-light-subtle shadow-sm" 
+               ng-model="newMed.name" required>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-bold text-muted">Category</label>
+            <input type="text" class="form-control rounded-3 border-light-subtle shadow-sm" 
+                   ng-model="newMed.category" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-bold text-muted">Supplier</label>
+            <input type="text" class="form-control rounded-3 border-light-subtle shadow-sm" 
+                   ng-model="newMed.suplier"required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-bold text-muted">Price (£)</label>
+            <input type="number" class="form-control rounded-3 border-light-subtle shadow-sm" 
+                   ng-model="newMed.price"required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-bold text-muted">Stock Quantity</label>
+            <input type="number" class="form-control rounded-3 border-light-subtle shadow-sm" 
+                   ng-model="newMed.stock"  required>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">Image Url</label>
+        <input type="text" class="form-control rounded-3 border-light-subtle shadow-sm" 
+               ng-model="newMed.img_url">
+         </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn w-100 py-2 fw-bold shadow-sm rounded-3 text-white" 
+               ng-style="isEditMode ? {'background-color': '#f39c12'} : {'background-color': '#14b8a6'}"
+        style="border: none;">
+    {{isEditMode ? 'Update Medicine' : 'Save to Inventory'}}
+        </button>
+    </div>
+</form>
+            </div>
+        </div>
+    </div>
+</div>

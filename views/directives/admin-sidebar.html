@@ -1,0 +1,46 @@
+<nav
+  class="sidebar p-4 text-white shadow"
+  style="background-color: #14b8a6; width: 260px; min-height: 100vh"
+>
+  <div class="text-center mb-5">
+    <h3 class="fw-bold">ENAYA</h3>
+    <div class="mt-4">
+      <img
+        src="../../assets/img/logo.png"
+        class="border border-3 border-white shadow-sm"
+        style="border-radius: 50%"
+        width="80"
+      />
+      <h6 class="mt-2 mb-0">{{userInfo.userName}}</h6>
+      <small class="opacity-75">{{userInfo.email}}</small>
+    </div>
+  </div>
+
+  <ul class="nav gap-2">
+    <li class="nav-item row">
+      <a href="#!/dashboard" class="nav-link text-white opacity-75"
+        ><i class="fas fa-th-large me-2"></i> Dashboard</a
+      >
+    </li>
+    <li class="nav-item row">
+         <a href="#!/admin/medicenes"  class="nav-link text-white opacity-75"
+        ><i class="fas fa-pills me-2"></i> Medicines</a
+      >
+    </li>
+    <li class="nav-item row">
+      <a href="#!/sales" class="nav-link text-white opacity-75"
+        ><i class="fas fa-file-invoice-dollar me-2"></i> Sales Invoices</a
+      >
+    </li>
+    <li class="nav-item row">
+      <a href="#!/admin/customers" class="nav-link text-white"
+        ><i class="fas fa-users me-2"></i> Customers</a
+      >
+    </li>
+    <li class="nav-item row">
+      <a href="#!/logout" class="nav-link text-white opacity-75"
+        ><i class="fas fa-sign-out-alt me-2"></i> Logout</a
+      >
+    </li>
+  </ul>
+</nav>

@@ -13,9 +13,12 @@ app.config(function($routeProvider){
   }).when('/admin/customers',{
     templateUrl:'views/admin/customers.html',
     controller:'customerController'
+  }).when('/admin/medicenes',{
+    templateUrl:'views/admin/medicines.html',
+    controller:'medicineController'
   }).when('/home',{
     templateUrl:'views/home.html',
-  }).otherwise({
-    redirectTo:'/home'
-  })
+  }).otherwise({ 
+    redirectTo : '/home'
+  });
 });

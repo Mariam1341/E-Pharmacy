@@ -1,84 +1,77 @@
 <div class="d-flex min-vh-100 bg-light">
-    <nav class="sidebar p-4 text-white shadow" style="background-color: #14b8a6;  width: 260px;">
-        <div class="text-center mb-5">
-            <h3 class="fw-bold">ENAYA</h3>
-            <div class="mt-4">
-                <img src="../../assets/img/logo.png" class="border border-3 border-white shadow-sm" style="border-radius: 50%;" width="80">
-                <h6 class="mt-2 mb-0">{{userInfo.userName}}</h6>
-                <small class="opacity-75">{{userInfo.email}}</small>
-            </div>
+
+<admin-sidebar></admin-sidebar>
+  <main class="container-fluid p-5">
+    <header class="d-flex justify-content-between align-items-center mb-5">
+      <h2 class="text-teal fw-bold">All Customers</h2>
+      <div class="d-flex gap-2">
+        <input
+          type="text"
+          class="form-control border-0 px-4"
+          placeholder="    Customer Name..."
+          ng-model="searchName"
+        />
+        <button class="btn btn-teal px-4 shadow-sm">Filter</button>
+      </div>
+    </header>
+
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-0">
+        <div class="d-flex justify-content-center my-5" ng-show="loading">
+          <div
+            class="spinner-border custom-spinner"
+            role="status"
+            style="color: #14b8a6; width: 3rem; height: 3rem"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
+        <table class="table table-hover mb-0" ng-hide="loading">
+          <thead class="light text-teal fw-bold">
+            <tr>
+              <th class="p-3">USER INFO</th>
+              <!-- <th class="p-3">NAME</th> -->
+              <th class="p-3">EMAIL</th>
+              <th class="p-3">PHONE</th>
+              <th class="p-3">REGISTER DATE</th>
+              <th class="text-center p-3">ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              ng-repeat="user in customers | filter:searchName track by $index"
+            >
+              <td class="ps-4">
+                <div class="d-flex align-items-center">
+                  <img
+                    src="../../assets/img/customers/customer{{$index + 1}}.png"
+                    alt="avatar"
+                    class="rounded-circle shadow-sm"
+                    style="width: 50px; height: 50px; background-color: #f0f0f0"
+                  />
+                  <!-- <img ng-src="{{user.photo}}" class="rounded-circle me-3 border shadow-sm" width="40" height="40"> -->
+                  <span class="m-2 text-muted">{{user.userName}}</span>
+                </div>
+              </td>
+              <td class="text-muted">{{user.email}}</td>
+              <!-- <td class="text-muted">{{user.address}}</td> -->
+              <td class="text-muted small">{{user.phone}}</td>
+              <td class="text-muted">
+                {{user.created_at | date:'yyyy-MM-dd'}}
+              </td>
 
-        <ul class="nav gap-2">
-            <li class="nav-item row"><a href="#!/dashboard" class="nav-link text-white opacity-75"><i class="fas fa-th-large me-2"></i> Dashboard</a></li>
-            <li class="nav-item row"><a href="#!/medicines" class="nav-link text-white opacity-75"><i class="fas fa-pills me-2"></i> Medicines</a></li>
-            <li class="nav-item row"><a href="#!/sales" class="nav-link text-white opacity-75"><i class="fas fa-file-invoice-dollar me-2"></i> Sales Invoices</a></li>
-            <li class="nav-item row"><a href="#!/customers" class="nav-link text-white "><i class="fas fa-users me-2"></i> Customers</a></li>
-            <li class="nav-item row"><a href="#!/logout" class="nav-link text-white opacity-75"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
-        </ul>
-    </nav>
-
-    <main class="container-fluid p-5">
-        <header class="d-flex justify-content-between align-items-center mb-5">
-            <h2 class="text-teal fw-bold">All Customers </h2>
-            <div class="d-flex gap-2">
-                <input type="text" class="form-control border-0 px-4" placeholder="    Customer Name..." ng-model="searchName">
-                <button class="btn btn-teal px-4 shadow-sm">Filter</button>
-            </div>
-        </header>
-
-
-        <div class="card border-0 shadow-sm rounded-4">
-            <div class="card-body p-0">
-                <div class="d-flex justify-content-center my-5" ng-show="loading">
-                            <div class="spinner-border custom-spinner" role="status"
-                            style=" color: #14b8a6; 
-                                    width: 3rem;
-                                    height: 3rem;"
-                            >
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                <table class="table table-hover  mb-0" ng-hide="loading">
-                    <thead class="light text-teal fw-bold">
-                        <tr>
-                            <th class="p-3 ">USER INFO</th>
-                            <!-- <th class="p-3">NAME</th> -->
-                            <th class="p-3">EMAIL</th>
-                            <th class="p-3">PHONE</th>
-                            <th class="p-3">REGISTER DATE</th>
-                            <th class="text-center p-3">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-
-                        <tr ng-repeat="user in customers | filter:searchName track by $index">
-                            <td class="ps-4">
-                                <div class="d-flex align-items-center">
-                                    <img src="../../assets/img/customers/customer{{$index + 1}}.png" 
-                                    alt="avatar" 
-                                    class="rounded-circle shadow-sm" 
-                                    style="width: 50px; height: 50px; background-color: #f0f0f0;">
-                                    <!-- <img ng-src="{{user.photo}}" class="rounded-circle me-3 border shadow-sm" width="40" height="40"> -->
-                                    <span class="m-2 text-muted ">{{user.userName}}</span>
-                                </div>
-                            </td>
-                            <td class="text-muted">{{user.email}}</td>
-                            <!-- <td class="text-muted">{{user.address}}</td> -->
-                            <td class="text-muted small">{{user.phone}}</td>
-                            <td class="text-muted">{{user.created_at | date:'yyyy-MM-dd'}}</td>
-
-                            <td class="text-center">
-                                <button class="btn btn-outline-danger btn-sm rounded-pill px-3 border-0 fw-bold" ng-click="deleteCustomer(user)">
-                                    <i class="fas fa-trash-alt me-1"></i> Delete
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                    
-                </table>
-            </div>
-        </div>
-    </main>
+              <td class="text-center">
+                <button
+                  class="btn btn-outline-danger btn-sm rounded-pill px-3 border-0 fw-bold"
+                  ng-click="deleteCustomer(user)"
+                >
+                  <i class="fas fa-trash-alt me-1"></i> Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
 </div>
