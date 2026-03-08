@@ -28,22 +28,35 @@ app.controller('medicineController',function($scope, medicineService, notificati
   };
 
   
-  $scope.saveMedicine = function() {         
+  $scope.saveOrEditMedicine = function() {         
       $scope.newMed.isDeleted = false;
+      if($scope.isEditMode){
+        medicineService.editMedicine($scope.newMed, $scope.newMed.id)   
+      .then(function(response){       
+        notificationService.showMsg('Medicine Updated successfully!', 'success');  
+        $scope.getAllMedicines();
+        $scope.isModalOpen = false;         
+      }).catch(function(error){
+        notificationService.showMsg('Error: Could not Update medicine', 'error');
+        
+      })
+      }else{
       medicineService.addMedicine($scope.newMed)   
       .then(function(response){       
         notificationService.showMsg('Medicine added successfully!', 'success');  
         $scope.getAllMedicines();
         $scope.isModalOpen = false;         
       }).catch(function(error){
-        notificationService.showMsg('Error: Could not Add medicine', 'error');
-        
+        notificationService.showMsg('Error: Could not Add medicine', 'error');        
       })
+      }
+      
   };
 
   $scope.editMedicine = function(med){
     $scope.isEditMode = true;
     $scope.openAddModal();
+    $scope.newMed = med;
 
   }
 

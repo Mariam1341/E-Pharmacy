@@ -1,1 +1,340 @@
-<h1>Home Page</h1>
+<header class="bg-light border-bottom border-gray-200">
+  <div class="container-xl px-4 py-2">
+    <div class="d-flex justify-content-between align-items-center font-sans">
+      <h2 class="text-muted small mb-0">
+        For first aid emergencies, call our hotline
+      </h2>
+
+      <div class="d-flex align-items-center gap-1">
+        <i class="fas fa-phone-alt small text-muted"></i>
+        <a
+          href="https://t.me/+201013290987"
+          target="_blank"
+          class="text-decoration-none small fw-medium text-muted hover-teal"
+        >
+          First Aid
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+<nav-bar is-logged-in="isLoggedIn" 
+    current-user="currentUser" 
+    cart-count="cartCount" 
+    show-cart="showCart" 
+    logout="handleLogout()"></nav-bar>
+
+<!-- <nav
+  class="navbar navbar-expand-lg navbar-white bg-white shadow-sm py-3 sticky-top"
+>
+  <div class="container-xl px-4">
+    <img src="../assets/img/logoo.png" alt="ENAYA" width="40" class="me-2" />
+    <a class="navbar-brand fw-bold fs-3" href="#!/" style="color: #14b8a6"
+      >ENAYA</a
+    >
+
+    <div
+      class="collapse navbar-collapse justify-content-end"
+      id="patientNavbar"
+    >
+      <ul class="navbar-nav align-items-center gap-4">
+        <li class="nav-item">
+          <a class="nav-link fw-bold text-secondary hover-teal" href="#!/shop"
+            >Shop</a
+          >
+        </li>
+
+        <li class="nav-item">
+         
+          <a class="nav-link position-relative" href="" ng-click="showCart = true">
+    <i class="fas fa-shopping-cart fs-5 text-secondary"></i>
+    <span
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-teal"
+              style="background-color: #14b8a6; font-size: 0.6rem"
+            >{{ cartCount || 0 }}</span>
+</a>
+          
+        </li>
+
+        <li
+          class="nav-item d-flex align-items-center gap-3 border-start ps-4"
+          ng-if="isLoggedIn"
+        >
+          <a
+            href="#!/profile"
+            class="text-decoration-none d-flex align-items-center gap-2"
+          >
+            <div
+              class="rounded-circle bg-teal-light p-2 d-flex align-items-center justify-content-center"
+              style="width: 35px; height: 35px; background-color: #e6fffa"
+            >
+              <i class="fas fa-user text-teal" style="color: #14b8a6"></i>
+            </div>
+            <span class="fw-bold text-dark small">{{ currentUser.name }}</span>
+          </a>
+          <button
+            class="btn btn-link text-muted p-0"
+            ng-click="logout()"
+            title="Logout"
+          >
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </li>
+
+        <li class="nav-item" ng-if="!isLoggedIn">
+          <a
+            class="btn text-white rounded-pill px-4 fw-bold shadow-sm"
+            style="background-color: #14b8a6"
+            href="#!/login"
+          >
+            Login
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav> -->
+
+<section id="hero-search" class="bg-light-subtle antialiased">
+  <div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center font-sans">
+        <h1 class="display-4 fw-bold mb-4 tracking-tight text-dark">
+          Your medication, delivered
+        </h1>
+
+        <div class="lead text-secondary mb-5 mx-auto" style="max-width: 600px">
+          Say goodbye to all your healthcare worries with us
+        </div>
+
+        <div class="position-relative mx-auto" style="max-width: 500px">
+          <div
+            class="input-group shadow-lg rounded-pill overflow-hidden border-2 border-teal"
+            style="border: 2px solid #14b8a6"
+          >
+            <input
+              type="text"
+              class="form-control border-0 p-4 shadow-none"
+              placeholder="Search your medicine from here"
+              ng-model="searchQuery"
+              ng-change="updateSearch(searchQuery)"
+            />
+            <button
+              class="btn px-4 text-white fw-bold"
+              type="button"
+              style="background-color: #14b8a6"
+              ng-click="goToShop()"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="mt-5 text-teal fw-medium tracking-wider"
+          style="color: #14b8a6"
+        >
+          Take care of your healthcare now!
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" style="color: #0d5a4a">Our Medicines</h2>
+    <div class="d-flex align-items-center gap-3">
+      <span class="text-muted small"
+        ><i class="fas fa-filter me-1"></i> Filters</span
+      >
+      <input
+        type="text"
+        class="form-control form-control-sm rounded-pill px-3"
+        placeholder="Search medicine..."
+        ng-model="searchFilter"
+        style="width: 200px"
+      />
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div
+      class="col-6 col-md-4 col-lg-3"
+      ng-repeat="med in medicines | filter:{isDeleted: false} | filter:searchFilter"
+    >
+      <div class="card h-100 border-0 shadow-sm p-3 rounded-4">
+        <div class="text-center mb-3 overflow-hidden" style="height: 150px">
+          <img
+            ng-src="{{med.img_url || 'assets/default-med.png'}}"
+            class="img-fluid h-100 object-fit-contain"
+            alt="{{med.name}}"
+          />
+        </div>
+
+        <div class="d-flex justify-content-between align-items-start mb-1">
+          <h6 class="fw-bold mb-0">{{med.name}}</h6>
+          <span class="fw-bold text-teal" style="color: #14b8a6"
+            >{{med.price}}£</span
+          >
+        </div>
+        <p class="text-muted small mb-3 uppercase">{{med.suplier}}</p>
+
+        <div class="d-flex align-items-center justify-content-between mt-auto">
+          <div class="d-flex gap-2 text-muted">
+            <i class="far fa-heart cursor-pointer hover-teal"></i>
+            <i class="far fa-eye cursor-pointer hover-teal"></i>
+          </div>
+          <button
+            class="btn btn-sm text-white px-3 rounded-3 fw-bold"
+            style="background-color: #14b8a6"
+            ng-click="handleAddToCart(med)"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-light pt-5 pb-4 border-top">
+  <div class="container">
+    <div class="row text-md-start">
+      <div class="col-md-3 mb-4 mb-md-0">
+        <div class="d-flex align-items-center mb-3">
+          <img
+            src="../assets/img/logoo.png"
+            alt="ENAYA"
+            width="40"
+            class="me-2"
+          />
+          <h4 class="fw-bold mb-0" style="color: #14b8a6">ENAYA</h4>
+        </div>
+        <p class="text-muted small mb-1">Find, Order and Heal!</p>
+        <p class="text-muted small mb-3">Your Health, Just a Click Away</p>
+        <div class="d-flex gap-3 text-secondary">
+          <a href="#" class="text-decoration-none text-secondary"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="#" class="text-decoration-none text-secondary"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="#" class="text-decoration-none text-secondary"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="#" class="text-decoration-none text-secondary"
+            ><i class="fab fa-linkedin-in"></i
+          ></a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-2 mb-4 mb-md-0">
+        <h6 class="fw-bold text-uppercase small mb-3" style="color: #14b8a6">
+          About
+        </h6>
+        <ul class="list-unstyled small text-muted">
+          <li class="mb-2">Company</li>
+          <li class="mb-2">Careers</li>
+          <li class="mb-2">Blog</li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-md-2 mb-4 mb-md-0">
+        <h6 class="fw-bold text-uppercase small mb-3" style="color: #14b8a6">
+          Support
+        </h6>
+        <ul class="list-unstyled small text-muted">
+          <li class="mb-2">Contact Support</li>
+          <li class="mb-2">Help Resources</li>
+          <li class="mb-2">Release Updates</li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-md-2 mb-4 mb-md-0">
+        <h6 class="fw-bold text-uppercase small mb-3" style="color: #14b8a6">
+          Platform
+        </h6>
+        <ul class="list-unstyled small text-muted">
+          <li class="mb-2">Terms & Privacy</li>
+          <li class="mb-2">Pricing</li>
+          <li class="mb-2">FAQ</li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-md-2 mb-4 mb-md-0">
+        <h6 class="fw-bold text-uppercase small mb-3" style="color: #14b8a6">
+          Contact
+        </h6>
+        <ul class="list-unstyled small text-muted">
+          <li class="mb-2">Send a Message</li>
+          <li class="mb-2">Request a Quote</li>
+          <li class="mb-2">First Aid</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="my-4 text-muted" />
+    <div class="text-center">
+      <p class="small text-muted mb-0">
+        &copy; 2026 ENAYA. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+<div
+  class="wishlist-side p-4 shadow-lg bg-white position-fixed top-0 end-0 h-100"
+  style="width: 350px; z-index: 1050"
+  ng-show="showCart"
+>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="fw-bold mb-0">Cart</h5>
+    <i class="fas fa-times cursor-pointer" ng-click="closeCart()"></i>
+  </div>
+
+  <div class="cart-items overflow-auto" style="max-height: 70vh">
+    <div
+      class="d-flex align-items-center gap-3 mb-4 border-bottom pb-3"
+      ng-repeat="item in cart"
+    >
+      <div class="border rounded p-1" style="width: 70px">
+        <img ng-src="{{item.img_url}}" class="img-fluid" />
+      </div>
+      <div class="flex-grow-1">
+        <div class="d-flex justify-content-between">
+          <h6 class="small fw-bold mb-0">{{item.name}}</h6>
+          <span class="small fw-bold">{{item.price}}£</span>
+        </div>
+        <p class="text-muted xx-small mb-2">{{item.suplier}}</p>
+        <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center border rounded-pill px-2 py-1" style="background: #f8f9fa;">
+        <button class="btn btn-link btn-sm p-0 text-teal" ng-click="updateQty(item, -1)">
+            <i class="fas fa-minus-circle"></i>
+        </button>
+        <span class="mx-3 fw-bold small">{{item.qty}}</span>
+        <button class="btn btn-link btn-sm p-0 text-teal" ng-click="updateQty(item, 1)">
+            <i class="fas fa-plus-circle"></i>
+        </button>
+    </div>
+    
+    <span class="text-danger small cursor-pointer" ng-click="removeItem($index)">
+        <i class="far fa-trash-alt me-1"></i> Remove
+    </span>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="position-absolute bottom-0 start-0 w-100 p-4 bg-white border-top">
+    <a
+      class="btn w-100 py-2 text-white fw-bold rounded-3 mb-2"
+      style="background-color: #14b8a6"
+      href ="#!/checkout"
+    >
+      <i class="fas fa-shopping-basket me-2"></i> Check Out
+    </a>
+    <p class="text-center mb-0 small text-muted">
+      or <span class="text-teal cursor-pointer">Continue Shopping →</span>
+    </p>
+  </div>
+</div>

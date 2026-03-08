@@ -8,7 +8,7 @@ app.service('notificationService',function(){
             toast: true,
             position: 'top-end', 
             showConfirmButton: false,
-            timer: 3000, 
+            timer: 2000, 
             timerProgressBar: true,
             background: '#ffffff',
             iconColor: color,

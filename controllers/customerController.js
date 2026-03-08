@@ -16,7 +16,6 @@ app.controller('customerController', function($scope, userService, notificationS
   showAllCustomers();
 
   
-   // this.confirm = function(title, text, iconType, confirmText) {
  
     $scope.deleteCustomer = function(user){
       notificationService.confirm('Delete Confirmation',

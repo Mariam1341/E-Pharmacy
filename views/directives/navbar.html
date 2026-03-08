@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-white bg-white shadow-sm py-3 sticky-top">
+  <div class="container-xl px-4">
+    <img src="../assets/img/logoo.png" alt="ENAYA" width="40" class="me-2" />
+    <a class="navbar-brand fw-bold fs-3" href="#!/" style="color: #14b8a6">ENAYA</a>
+
+    <div class="collapse navbar-collapse justify-content-end" id="patientNavbar">
+      <ul class="navbar-nav align-items-center gap-4">
+        <li class="nav-item">
+          <a class="nav-link fw-bold text-secondary hover-teal" href="#!/shop">Shop</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link position-relative" href="" ng-click="showCart = true">
+            <i class="fas fa-shopping-cart fs-5 text-secondary"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+                  style="background-color: #14b8a6; font-size: 0.6rem">
+                {{ cartCount || 0 }}
+            </span>
+          </a>
+        </li>
+
+        <li class="nav-item d-flex align-items-center gap-3 border-start ps-4" ng-if="isLoggedIn">
+          <a href="#!/profile" class="text-decoration-none d-flex align-items-center gap-2">
+            <div class="rounded-circle p-2 d-flex align-items-center justify-content-center"
+                 style="width: 35px; height: 35px; background-color: #e6fffa">
+              <i class="fas fa-user" style="color: #14b8a6"></i>
+            </div>
+            <span class="fw-bold text-dark small">{{ currentUser.name }}</span>
+          </a>
+          <button class="btn btn-link text-muted p-0" ng-click="logout()" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </li>
+
+        <li class="nav-item" ng-if="!isLoggedIn">
+          <a class="btn text-white rounded-pill px-4 fw-bold shadow-sm"
+             style="background-color: #14b8a6" href="#!/login">
+            Login
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

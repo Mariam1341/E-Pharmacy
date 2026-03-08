@@ -1,0 +1,170 @@
+<div class="d-flex">
+  <admin-sidebar></admin-sidebar>
+
+  <main class="flex-grow-1 p-5 bg-light" style="min-height: 100vh">
+    <header class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold mb-0" style="color: #14b8a6">Sales History</h3>
+
+      <div class="d-flex gap-2">
+        <div class="position-relative">
+          <input
+            type="text"
+            class="form-control border-0 shadow-sm ps-4"
+            placeholder="  Search Invoice By Customer Name"
+            ng-model="searchInvoice.customerName"
+            style="width: 250px"
+          />
+        </div>
+        <button
+          class="btn btn-teal px-4 shadow-sm text-white"
+          style="background-color: #14b8a6"
+        >
+          Filter
+        </button>
+      </div>
+    </header>
+
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-0">
+        <div class="d-flex justify-content-center my-5" ng-show="loading">
+          <div
+            class="spinner-border"
+            role="status"
+            style="color: #14b8a6; width: 3rem; height: 3rem"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+        <table class="table table-hover mb-0" ng-hide="loading">
+          <thead class="bg-light-teal text-teal fw-bold">
+            <tr>
+              <th class="p-3 ps-4 text-uppercase">Invoice ID</th>
+              <th class="p-3 text-uppercase">Customer Name</th>
+              <th class="p-3 text-uppercase text-center">Date</th>
+              <th class="p-3 text-uppercase text-center">Total Amount</th>
+              <th class="p-3 text-uppercase text-center">Status</th>
+              <th class="p-3 text-center text-uppercase">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="inv in allInvoices | filter:searchInvoice">
+              <td class="ps-4 py-3 fw-bold">#{{inv.id}}</td>
+              <td class="py-3">{{inv.customerName}}</td>
+              <td class="text-center py-3 text-muted small">
+                {{inv.created_at | date:'dd/MM/yyyy'}}
+              </td>
+              <td class="text-center py-3 fw-bold" style="color: #14b8a6">
+                {{inv.totalAmount}}£
+              </td>
+              <td class="text-center py-3">
+                <span
+                  class="badge rounded-pill px-3 py-2"
+                  ng-class="inv.status === 'Delivered' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning'"
+                  style="font-size: 0.75rem"
+                >
+                  <i
+                    class="fas"
+                    ng-class="inv.status === 'Delivered' ? 'fa-check-circle' : 'fa-clock'"
+                  ></i>
+                  {{ inv.status || 'Pending' }}
+                </span>
+              </td>
+              <td class="text-center py-3">
+                <button
+                  class="btn btn-outline-teal btn-sm rounded-pill px-4 fw-bold"
+                  style="color: #14b8a6; border-color: #14b8a6"
+                  ng-click="viewDetails(inv)"
+                >
+                  View Details
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div
+  class="modal fade show"
+  tabindex="-1"
+  ng-style="showInvoiceModal ? {'display': 'block', 'background': 'rgba(0,0,0,0.5)'} : {'display': 'none'}"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow rounded-4">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="fw-bold" style="color: #14b8a6">Invoice Details</h5>
+        <button
+          type="button"
+          class="btn-close"
+          ng-click="showInvoiceModal = false"
+        ></button>
+      </div>
+
+     <div class="modal-body p-4">
+  <!-- <div class="mb-4 p-3 rounded-3 bg-light border-start border-4" style="border-color: #14b8a6 !important">
+    <label class="form-label small fw-bold text-muted d-block">Customer</label>
+    <span class="h6 fw-bold mb-0">{{selectedInvoice.customerName}}</span>
+  </div> -->
+
+  <div class="mb-4 p-3 rounded-3 bg-light border-start border-4" style="border-color: #14b8a6 !important">
+    <div class="row">
+      <div class="col-md-6">
+        <label class="form-label small fw-bold text-muted d-block mb-0">Customer</label>
+        <span class="fw-bold">{{selectedInvoice.customerName}}</span>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <label class="form-label small fw-bold text-muted d-block mb-0">Phone</label>
+        <span class="small"><i class="fas fa-phone-alt me-1 text-teal"></i> {{selectedInvoice.phone}}</span>
+      </div>
+      <div class="col-12 mt-2 pt-2 border-top">
+        <label class="form-label small fw-bold text-muted d-block mb-0">Shipping Address</label>
+        <span class="small text-muted"><i class="fas fa-map-marker-alt me-1 text-teal"></i> {{selectedInvoice.address}}</span>
+      </div>
+    </div>
+  </div>
+  <table class="table table-sm align-middle">
+    <thead class="text-muted small">
+      <tr>
+        <th>Medicine</th>
+        <th class="text-center">Qty</th>
+        <th class="text-end">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in selectedInvoice.items track by $index">
+        <td class="py-2 fw-medium text-uppercase" style="font-size: 0.85rem">
+          {{ getMedicineInfo(item.medicine_id).name }}
+        </td>
+        <td class="text-center">{{ item.qty }}</td>
+        <td class="text-end fw-bold">{{ item.total }}£</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mt-4 pt-3 border-top">
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="fw-bold text-muted text-uppercase small">Grand Total</span>
+      <span class="h4 fw-bold mb-0" style="color: #14b8a6">{{selectedInvoice.totalAmount}}£</span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer border-0 p-4 pt-0 d-flex justify-content-between">
+  <button type="button" class="btn btn-light rounded-pill px-4 fw-bold" ng-click="showInvoiceModal = false">
+    Close
+  </button>
+
+  <button type="button" 
+          class="btn text-white rounded-pill px-4 fw-bold shadow-sm" 
+          style="background-color: #14b8a6"
+          ng-if="selectedInvoice.status !== 'Delivered'"
+          ng-click="confirmOrder(selectedInvoice)">
+    <i class="fas fa-box-open me-2"></i> Confirm & Deliver
+  </button>
+</div>
+    </div>
+  </div>
+</div>

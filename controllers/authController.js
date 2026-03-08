@@ -34,14 +34,16 @@ app.controller(
           );
           $timeout(function () {
             $location.path("/home");
-          }, 3000);
+          }, 2000);
         })
         .catch(function (error) {
           console.log(error);
         });
     };
+    localStorage.clear(); 
 
     $scope.login = function () {
+  
       let user = {
         email: $scope.formData.email,
         password: $scope.formData.password,
@@ -70,10 +72,10 @@ app.controller(
             userFound.role === "admin"
               ? $timeout(function () {
                   $location.path("/admin/customers");
-                }, 3000)
+                },2000)
               : $timeout(function () {
                   $location.path("/home");
-                }, 3000);
+                }, 2000);
           } else {
             notificationService.showMsg("User Not Found", "error");
           }
@@ -82,6 +84,12 @@ app.controller(
           notificationService.showMsg("User Not Found", "error");
         });
     };
+
+    // $scope.logout = function(){
+    //   console.log('hello')
+    //   localStorage.clear(); 
+    //   notificationService.showMsg("Logged out successfully!", "success");
+    // }
 
     //from this repo https://github.com/VincentGarreau/particles.js
     // Ask Chat GPT to edit it with what I want

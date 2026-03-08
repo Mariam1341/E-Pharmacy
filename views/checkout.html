@@ -1,0 +1,72 @@
+<div class="container py-5 mt-5">
+    <div class="row g-5">
+        <div class="col-md-7">
+            <h4 class="fw-bold mb-4" style="color: #0d5a4a;">Shipping Information</h4>
+            <form name="checkoutForm" ng-submit="placeOrder()" novalidate>
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label small fw-bold">Full Name</label>
+                        <input type="text" class="form-control rounded-3" ng-model="order.customerName" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small fw-bold">Phone Number</label>
+                        <input type="tel" class="form-control rounded-3" ng-model="order.phone" required>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <label class="form-label small fw-bold">City</label>
+                        <select class="form-select rounded-3" ng-model="order.city" required>
+                            <option value="">Choose...</option>
+                            <option>Cairo</option>
+                            <option>Giza</option>
+                            <option>Alexandria</option>
+                        </select>
+                    </div> -->
+                    <div class="col-12">
+                        <label class="form-label small fw-bold">Full Address</label>
+                        <textarea class="form-control rounded-3" rows="3" ng-model="order.address" required></textarea>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <button class="btn btn-lg w-100 text-white fw-bold shadow-sm" 
+                        style="background-color: #14b8a6;" 
+                        type="submit" 
+                        ng-disabled="checkoutForm.$invalid || cart.length === 0">
+                    Confirm & Place Order
+                </button>
+            </form>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm p-4 rounded-4 bg-light">
+                <h5 class="fw-bold mb-4">Your Order Summary</h5>
+                <div class="order-items overflow-auto mb-3" style="max-height: 300px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2" ng-repeat="item in cart">
+                        <div class="d-flex align-items-center gap-3">
+                            <img ng-src="{{item.img_url}}" width="50" class="rounded border">
+                            <div>
+                                <h6 class="mb-0 small fw-bold">{{item.name}}</h6>
+                                <span class="text-muted xx-small">Qty: {{item.qty}}</span>
+                            </div>
+                        </div>
+                        <span class="fw-bold small">{{ item.price * item.qty }}£</span>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Subtotal</span>
+                    <span class="fw-bold">{{ getTotal() }}£</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Shipping</span>
+                    <span class="text-success fw-bold">Free</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <h5 class="fw-bold">Total</h5>
+                    <h5 class="fw-bold text-teal" style="color: #14b8a6;">{{ getTotal() }}£</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

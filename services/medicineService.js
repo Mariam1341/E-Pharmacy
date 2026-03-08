@@ -25,4 +25,7 @@ app.service('medicineService', function($http) {
     this.deleteMedicine = function(id){
       return $http.delete(`${API_URL}?id=eq.${id}`, config)
     }
+    this.getMedicine = function(id){
+      return $http.get(`${API_URL}?id=eq.${id}`, config);
+    }
 });   
